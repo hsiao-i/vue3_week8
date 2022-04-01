@@ -1,0 +1,42 @@
+一進入的頁面
+首頁按鈕，router-link 沒有反應
+
+--
+成功加入產品 alert
+單一頁面內 猜你喜歡 swiper
+首頁 新品上市 swiper
+wow.js
+navbar 購物車標示數量
+navbar 調整
+單一產品圖 切換多圖預覽
+產品列表 特價加上 sale
+購物車列表 rwd 修改（參考 ringring）
+toast
+登入後台頁面
+其他 loading
+
+--
+篩選 V
+
+單一產品頁面
+    -加入購物車 V
+
+footer
+購物車列表
+    -切版 V
+    -取得購物車列表 V
+    -修改 V
+    -刪除 V
+    -套用優惠券 V
+    -訂購表單驗證 (V)
+訂單頁面
+    -帶出資料
+    -結帳
+navbar 的購物車
+文案
+
+--
+發問
+1. productsPage router-link 沒反應
+2. productPage 加入購物車成功後，畫面不會重新載入圖片。有加上 watch $route 還是一樣沒反應
+3. cartPage.vue 214行開始 進行 select 的驗證，無法帶上 placeholder
