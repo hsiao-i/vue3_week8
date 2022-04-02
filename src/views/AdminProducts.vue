@@ -166,14 +166,15 @@ export default {
       this.isLoading = true
       this.$http
         .delete(
-          `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/admin/order/${this.tempProduct.id}`
+          `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
         )
         .then((res) => {
-          // console.log(res)
+          console.log(res)
           alert('刪除品項成功')
           this.isLoading = false
           const delProductComponent = this.$refs.delModal
           delProductComponent.closeModal()
+          this.getProducts()
         })
         .catch((err) => {
           alert(err.response.message)

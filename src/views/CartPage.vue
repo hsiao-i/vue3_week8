@@ -133,11 +133,16 @@
             </div>
             <div class="d-flex justify-content-between">
               <p>折抵金額</p>
-              <p>- NT$ {{ `${cartData.total - cartData.final_total}` }}</p>
+              <p>
+                - NT$
+                {{ `${Math.ceil(cartData.total - cartData.final_total)}` }}
+              </p>
             </div>
             <div class="d-flex justify-content-between mt-3">
               <p>結帳金額</p>
-              <p class="text-danger fs-5-5">NT$ {{ cartData.final_total }}</p>
+              <p class="text-danger fs-5-5">
+                NT$ {{ `${Math.ceil(cartData.final_total)}` }}
+              </p>
             </div>
           </div>
         </div>
@@ -228,8 +233,9 @@
               :class="{ 'is-invalid': errors['付款方式'] }"
               placeholder="請選擇付款方式"
               rules="required"
-              v-model="form.user.pay"
+              v-model="pay"
             >
+              <!-- <option value="" disabled>請選擇付款方式</option> -->
               <option value="default" selected disabled>請選擇付款方式</option>
               <option value="ATM">ATM 轉帳</option>
               <option value="visa">信用卡</option>
@@ -327,6 +333,7 @@
 </template>
 
 <script>
+// import emitter from '@/libs/emitter'
 export default {
   emits: ['emit-order'],
   data() {
@@ -346,7 +353,8 @@ export default {
         },
         message: ''
       },
-      pay: ''
+      pay: 'default',
+      orderId: ''
     }
   },
   methods: {
@@ -375,6 +383,7 @@ export default {
       this.$http.post(url, { data: data }).then((res) => {
         console.log(res)
         alert(res.data.message)
+        this.getCart()
       })
     },
     // 修改數量
@@ -397,6 +406,7 @@ export default {
           this.isLoading = false
         })
     },
+    // 刪除購物車
     deleteCart(id) {
       this.isLoading = true
       const url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/cart/${id}`
@@ -426,10 +436,16 @@ export default {
           console.log(res)
           alert(res.data.message)
           this.$refs.form.resetForm()
-          this.$router.push('/order')
           this.isLoading = false
+          // 取得訂單 id ，為了跳轉到訂單確認頁面
+          this.orderId = res.data.orderId
+          this.$router.push(`/order/${this.orderId}`)
+          console.log(this.orderId)
+
           // emit 傳訂單資料到 frontView，再從 frontView 去撈資料
-          this.$emit('emit-order', this.form)
+          //   emitter.emit('get-order', this.cartData)
+          //   this.$emit('emit-order', this.form)
+          //   emitter.emit('get-order', this.form)
         })
         .catch((err) => {
           alert(err.response)
@@ -444,6 +460,7 @@ export default {
   },
   mounted() {
     this.getCart()
+    console.log(this.cartData.carts.product_id)
   }
 }
 </script>

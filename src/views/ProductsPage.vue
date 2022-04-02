@@ -52,7 +52,10 @@
                 class="card-img"
                 :style="{ backgroundImage: `url(${products.imageUrl})` }"
               >
-                <router-link :to="`/product/${products.id}`"></router-link>
+                <router-link
+                  :to="`/product/${products.id}`"
+                  class="router-link"
+                ></router-link>
               </div>
               <div class="card-content">
                 <div class="d-flex pt-3 px-4 justify-content-between">
@@ -199,5 +202,11 @@ export default {
 
 .pointer {
   cursor: pointer;
+}
+
+.router-link {
+  display: block;
+  // width: 100%;
+  height: 260px;
 }
 </style>

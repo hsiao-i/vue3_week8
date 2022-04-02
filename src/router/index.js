@@ -21,7 +21,7 @@ const routes = [
         component: () => import('../views/CartPage.vue')
       },
       {
-        path: 'order',
+        path: 'order/:id',
         component: () => import('../views/OrderPage.vue')
       },
 

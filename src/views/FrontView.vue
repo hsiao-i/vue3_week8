@@ -1,18 +1,18 @@
 <template>
   <FrontNavbar></FrontNavbar>
 
-  <router-view @emit-order="getFormInfo"></router-view>
-  <!-- <CartPage @emit-order="getFormInfo"></CartPage> -->
+  <router-view></router-view>
+  <!-- @emit-order="getFormInfo" -->
 </template>
 
 <script>
 import FrontNavbar from '@/components/FrontNavbar.vue'
-// import CartPage from '@/views/CartPage.vue'
+
 export default {
   components: {
     FrontNavbar
-    // CartPage
   },
+
   data() {
     return {
       orderForm: {}
@@ -23,6 +23,9 @@ export default {
       this.orderForm = form
       console.log(this.orderForm)
       console.log(form)
+      // emitter.on('get-form', (form) => {
+      //   this.orderForm = form
+      // })
     }
   }
 }

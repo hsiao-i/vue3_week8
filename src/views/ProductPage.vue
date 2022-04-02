@@ -24,9 +24,7 @@
         <div class="h-100">
           <h3 class="product-title mb-3">{{ product.title }}</h3>
           <p class="lh-lg ps-3 fs-7">
-            商品材質：925 純銀<br />
-            鍊長：13公分主鍊+3公分延長鍊身<br />
-            備貨天數：約4-5個工作天
+            {{ product.description }}
           </p>
           <p v-if="product.price === product.origin_price" class="fs-5-5">
             NT$ {{ product.price }}
@@ -65,7 +63,7 @@
   <div class="container mx-auto">
     <h5 class="h5 text-center">商品描述</h5>
     <div class="text-center">
-      <p class="mb-3">{{ product.description }}</p>
+      <p class="mb-3">{{ product.content }}</p>
       <img
         :src="product.imageUrl"
         :alt="product.title"
@@ -93,12 +91,13 @@ export default {
   methods: {
     getProduct() {
       this.isLoading = true
-      const { id } = this.$route.params
+      const id = this.$route.params.id
       const url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/product/${id}`
       this.$http
         .get(url)
         .then((res) => {
           console.log(res)
+          console.log(this.$route.params.id)
           this.product = res.data.product
           this.isLoading = false
         })
@@ -121,6 +120,7 @@ export default {
           console.log(res)
           alert('成功加入購物車')
           this.isLoading = false
+          this.getProduct()
         })
         .catch((err) => {
           console.log(err)

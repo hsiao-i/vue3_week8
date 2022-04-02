@@ -12,31 +12,55 @@ navbar 調整
 產品列表 特價加上 sale
 購物車列表 rwd 修改（參考 ringring）
 toast
-登入後台頁面
+登入後台頁面（ui）
 其他 loading
+訂單重新整理頁面刷新保留資料（localstorage）
+研究文章和圖片上傳
+照片顏色調整？
 
 --
 篩選 V
 
 單一產品頁面
     -加入購物車 V
+    -購物車須知
 
-footer
+
 購物車列表
     -切版 V
     -取得購物車列表 V
     -修改 V
     -刪除 V
     -套用優惠券 V
-    -訂購表單驗證 (V)
+    -訂購表單驗證 V
+    -清除全部購物車
 訂單頁面
     -帶出資料
     -結帳
 navbar 的購物車
-文案
-
+文案 V
+footer
+首頁切版
+登入後台頁面（ui）
+後來發現的問題待處理
+    -ProductPage split \n 換行
+    -篩選功能
+    -產品列表進入單一產品 router-link
+    -收藏愛心拿掉
+    -表單驗證加星號
+    -檢查註解、有的可刪
+    -methods 加註解
+    -確認 loading 是不是都有帶上
+    -跳轉到訂單的 router-link 網址要帶上 :id 的東西
+    -order 帶出照片 （要用其他方式傳？）
+    -cart的付款拿掉
+    -商品表格靠右
+    -測試優惠券帶到 order 頁面
 --
 發問
 1. productsPage router-link 沒反應
 2. productPage 加入購物車成功後，畫面不會重新載入圖片。有加上 watch $route 還是一樣沒反應
 3. cartPage.vue 214行開始 進行 select 的驗證，無法帶上 placeholder
+
+--
+自己待處理

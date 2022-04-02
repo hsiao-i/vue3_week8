@@ -8,7 +8,7 @@ import router from './router'
 // loading 效果
 import Loading from 'vue-loading-overlay' // component
 import 'vue-loading-overlay/dist/vue-loading.css' // style
-import { date, toThousandths } from './methods/filters.js'
+import { date, toThousandths, descriptionSplit } from './methods/filters.js'
 import $messageState from '@/methods/messageState.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
@@ -35,6 +35,8 @@ app.config.globalProperties.$filters = {
   toThousandths
 }
 app.config.globalProperties.$messageState = $messageState
+
+app.config.globalProperties.$descriptionSplit = descriptionSplit
 
 app.use(router)
 app.use(VueAxios, axios)
