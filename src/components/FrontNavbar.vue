@@ -30,7 +30,7 @@
           </li>
           <router-link
             to="/cart"
-            class="d-block text-decoration-none d-lg-none py-2 mb-2 nav-text"
+            class="d-block text-decoration-none d-lg-none py-2 mb-2 nav-link"
             >購物車
           </router-link>
         </ul>
