@@ -50,9 +50,9 @@
             <tr class="text-center">
               <th scope="col" class="py-3">商品資訊</th>
               <th scope="col">單件價格</th>
-              <th scope="col">數量</th>
+
               <!-- <th scope="col">小計</th> -->
-              <th scope="col">刪除</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody class="border-bottom">
@@ -81,8 +81,7 @@
                     >NT$ {{ cart.product.origin_price }}</del
                   >
                 </p>
-              </td>
-              <td>
+
                 <select
                   name="qty"
                   id="qty"
@@ -99,6 +98,7 @@
                   </option>
                 </select>
               </td>
+
               <!-- <td>NT$ {{ `${cart.product.price * cart.qty}` }}</td> -->
               <td>
                 <a href="#" @click.prevent="deleteCart(cart.id)"
@@ -108,6 +108,7 @@
             </tr>
           </tbody>
         </table>
+
         <!-- 優惠券與結帳金額 -->
         <div class="row">
           <div class="col-6 mt-4">
