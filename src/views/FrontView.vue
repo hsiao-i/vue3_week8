@@ -55,4 +55,14 @@ body {
 .text-white {
   color: #ffffff;
 }
+
+.text-main {
+  color: #868686;
+}
+
+/* 文字斷行 */
+
+.word-break {
+  word-break: break-all;
+}
 </style>

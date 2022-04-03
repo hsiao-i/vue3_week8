@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar navbar-expand-lg navbar-light bg-light pt-3 sticky-top shadow-sm"
+    class="navbar navbar-expand-lg navbar-light bg-primary pt-3 sticky-top shadow-sm"
   >
     <div class="container-xl">
       <router-link
@@ -106,5 +106,9 @@ export default {
 /* 購物車文字 */
 .nav-text {
   color: #868686;
+}
+
+.bg-pink {
+  background-color: #fff8f8;
 }
 </style>

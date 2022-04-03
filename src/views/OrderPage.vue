@@ -27,7 +27,7 @@
   </div>
 
   <div class="container">
-    <div class="row g-5 justify-content-around">
+    <div class="row g-md-5 g-0 justify-content-around">
       <!-- 購物車列表確認 -->
       <div class="col-12 col-lg-6">
         <div class="table-cus mb-5">
@@ -97,30 +97,6 @@
                   <p>商品結帳金額</p>
                   <p class="text-danger">NT$ {{ Math.ceil(order.total) }}</p>
                 </div>
-                <!-- <div class="d-flex justify-content-between">
-                  <p>折抵金額</p>
-                  <p>
-                    - NT$
-                    {{ `${Math.ceil(cartData.total - cartData.final_total)}` }}
-                  </p>
-                </div>
-                <div class="d-flex justify-content-between mt-3">
-                  <p>結帳金額</p>
-                  <p class="text-danger fs-5-5">
-                    NT$ {{ `${Math.ceil(order.final_total)}` }}
-                  </p>
-                </div> -->
-
-                <!-- <div class="d-flex justify-content-between">
-                  <p>折抵金額</p>
-                  <p>
-                    - NT$ {{ `${order.total - order.products.product.total}` }}
-                  </p>
-                </div>
-                <div class="d-flex justify-content-between mt-3">
-                  <p>結帳金額</p>
-                  <p class="text-danger fs-5-5">NT$ {{ order.total }}</p>
-                </div> -->
               </div>
             </div>
           </div>
@@ -138,8 +114,8 @@
           </h5>
           <!-- 訂單詳細資料 -->
           <div class="px-5 py-4 text-center">
-            <div class="row">
-              <div class="col-4">
+            <!-- <div class="row"> -->
+            <!-- <div class="col-4">
                 <ul class="list-unstyled text-start">
                   <li class="mb-3">訂單金額</li>
                   <li class="mb-3">訂單編號</li>
@@ -151,66 +127,93 @@
                   <li class="mb-3">留言</li>
                   <li class="mb-3">付款方式</li>
                 </ul>
-              </div>
+              </div> -->
 
-              <div class="col-7">
-                <VForm ref="form" v-slot="{ errors }" @submit="checkPay">
-                  <ul class="list-unstyled text-start">
-                    <li class="mb-3 text-danger">
-                      NT$ {{ Math.ceil(order.total) }}
-                    </li>
-                    <li class="mb-3">{{ order.id }}</li>
-                    <li class="mb-3">{{ $filters.date(order.create_at) }}</li>
-                    <li class="mb-3">{{ order.user.name }}</li>
-                    <li class="mb-3">{{ order.user.email }}</li>
-                    <li class="mb-3">{{ order.user.tel }}</li>
-                    <li class="mb-3">{{ order.user.address }}</li>
-                    <li class="mb-3">
-                      <p v-if="!order.message">無</p>
-                      <p v-else>{{ order.message }}</p>
-                    </li>
-                    <li class="mb-3">
-                      <div class="mb-3">
-                        <VField
-                          id="pay"
-                          name="付款方式"
-                          as="select"
-                          class="form-select"
-                          :class="{ 'is-invalid': errors['付款方式'] }"
-                          placeholder="請選擇付款方式"
-                          rules="required"
-                          v-model="pay"
-                        >
-                          <option value="" selected disabled>
-                            請選擇付款方式
-                          </option>
-                          <option value="ATM">ATM 轉帳</option>
-                          <option value="visa">信用卡</option>
-                          <option value="visa">超商付款</option>
-                        </VField>
-                        <ErrorMessage
-                          name="付款方式"
-                          class="invalid-feedback"
-                        ></ErrorMessage>
-                      </div>
-                    </li>
+            <div class="col-12">
+              <VForm ref="form" v-slot="{ errors }" @submit="checkPay">
+                <ul class="list-unstyled text-start">
+                  <li class="mb-3 text-danger">
+                    <h6 class="text-main fs-6 mb-0">訂單金額</h6>
+                    <p class="word-break">NT$ {{ Math.ceil(order.total) }}</p>
+                  </li>
+                  <li class="mb-3">
+                    <h6 class="mb-0">訂單編號</h6>
+                    <p class="word-break">{{ order.id }}</p>
+                  </li>
+                  <li class="mb-3">
+                    <h6 class="mb-0">訂購時間</h6>
+                    <p class="word-break">
+                      {{ $filters.date(order.create_at) }}
+                    </p>
+                  </li>
+                  <li class="mb-3">
+                    <h6 class="mb-0">收件人姓名</h6>
+                    <p class="word-break"></p>
+                    {{ order.user.name }}
+                  </li>
+                  <li class="mb-3">
+                    <h6 class="mb-0">Email</h6>
+                    <p class="word-break">
+                      {{ order.user.email }}
+                    </p>
+                  </li>
+                  <li class="mb-3">
+                    <h6 class="mb-0">電話</h6>
+                    <p class="word-break">{{ order.user.tel }}</p>
+                  </li>
+                  <li class="mb-3">
+                    <h6 class="mb-0">收件地址</h6>
+                    <p class="word-break"></p>
+                    {{ order.user.address }}
+                  </li>
+                  <li class="mb-3">
+                    <h6 class="mb-0">留言</h6>
+                    <p v-if="!order.message" class="word-break">無</p>
+                    <p v-else class="word-break">{{ order.message }}</p>
+                  </li>
+                  <li class="mb-3">
+                    <h6 class="mb-0">付款方式</h6>
+                    <div class="mb-3">
+                      <VField
+                        id="pay"
+                        name="付款方式"
+                        as="select"
+                        class="form-select"
+                        :class="{ 'is-invalid': errors['付款方式'] }"
+                        placeholder="請選擇付款方式"
+                        rules="required"
+                        v-model="pay"
+                      >
+                        <option value="" selected disabled>
+                          請選擇付款方式
+                        </option>
+                        <option value="ATM">ATM 轉帳</option>
+                        <option value="visa">信用卡</option>
+                        <option value="visa">超商付款</option>
+                      </VField>
+                      <ErrorMessage
+                        name="付款方式"
+                        class="invalid-feedback"
+                      ></ErrorMessage>
+                    </div>
+                  </li>
 
-                    <button
-                      type="submit"
-                      class="btn btn-danger"
-                      :disabled="Object.keys(errors).length > 0"
-                    >
-                      確認付款
-                    </button>
-                  </ul>
-                </VForm>
-              </div>
+                  <button
+                    type="submit"
+                    class="btn btn-danger"
+                    :disabled="Object.keys(errors).length > 0"
+                  >
+                    確認付款
+                  </button>
+                </ul>
+              </VForm>
+            </div>
 
-              <!-- <button type="button" class="btn btn-danger">
+            <!-- <button type="button" class="btn btn-danger">
                 <router-link :to="`/order/${orderId}`"></router-link>結帳付款
               </button> -->
-            </div>
           </div>
+          <!-- </div> -->
         </div>
       </div>
     </div>
