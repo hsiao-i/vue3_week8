@@ -2,39 +2,38 @@
   <FrontNavbar></FrontNavbar>
 
   <router-view></router-view>
-  <!-- @emit-order="getFormInfo" -->
+  <FrontFooter class="mt-5"></FrontFooter>
 </template>
 
 <script>
 import FrontNavbar from '@/components/FrontNavbar.vue'
+import FrontFooter from '@/components/FrontFooter.vue'
 
 export default {
   components: {
-    FrontNavbar
+    FrontNavbar,
+    FrontFooter
   },
 
   data() {
     return {
       orderForm: {}
     }
-  },
-  methods: {
-    getFormInfo(form) {
-      this.orderForm = form
-      console.log(this.orderForm)
-      console.log(form)
-      // emitter.on('get-form', (form) => {
-      //   this.orderForm = form
-      // })
-    }
   }
 }
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+
 body {
   background-color: #fff8f8;
   color: #707070;
+}
+
+.logo {
+  font-family: 'Marck Script', cursive;
+  // font-family: 'Noto Sans TC', sans-serif;
 }
 
 .mb-100 {

@@ -1,21 +1,16 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light pt-3 sticky-top">
+  <nav
+    class="navbar navbar-expand-lg navbar-light bg-light pt-3 sticky-top shadow-sm"
+  >
     <div class="container-xl">
-      <router-link to="/" class="navbar-brand text-center me-5" href="#"
+      <router-link
+        to="/"
+        class="navbar-brand text-center me-5 logo fs-4 lh-sm text-danger"
+        href="#"
         >Ahead <br />
         accessories</router-link
       >
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item me-3">
@@ -28,18 +23,37 @@
               >關於我們</router-link
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-none">
             <router-link to="/login" class="nav-link" href="#"
               >登入後台</router-link
             >
           </li>
+          <router-link
+            to="/cart"
+            class="d-block text-decoration-none d-lg-none py-2 mb-2 nav-text"
+            >購物車
+          </router-link>
         </ul>
       </div>
-
-      <a class="text-secondary fs-3"
-        ><router-link to="/cart"
-          ><i class="bi bi-cart3 text-secondary"></i></router-link
-      ></a>
+      <div class="d-lg-flex d-block align-items-center">
+        <router-link to="/cart" class="d-lg-block d-none"
+          ><i class="bi bi-cart3 nav-text fs-3"></i
+        ></router-link>
+        <!-- <router-link to="/cart" v-else
+          >購物車</i
+        ></router-link> -->
+        <button
+          class="navbar-toggler ms-3"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
 
       <!-- <button type="button" class="btn btn-primary me-5">
         結帳
@@ -87,3 +101,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* 購物車文字 */
+.nav-text {
+  color: #868686;
+}
+</style>

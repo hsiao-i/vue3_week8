@@ -20,6 +20,8 @@ toast
 進度條 https://bootstrap5.hexschool.com/docs/5.1/utilities/position/
 手機驗證
 有時間再把 cartPage 的折扣金額帶到 orderPage
+-order 帶入 pagination (訂單查詢？)
+
 --
 篩選 V
 
@@ -35,29 +37,36 @@ toast
     -刪除 V
     -套用優惠券 V
     -訂購表單驗證 V
-    -清除全部購物車
+    -清除全部購物車 V
 訂單頁面
-    -帶出資料
-    -結帳
+    -帶出資料 V
+    -結帳 V
 navbar 的購物車
 文案 V
 footer
 首頁切版
 登入後台頁面（ui）
 後來發現的問題待處理
-    -ProductPage split \n 換行
-    -篩選功能
-    -產品列表進入單一產品 router-link
-    -收藏愛心拿掉
-    -表單驗證加星號
-    -檢查註解、有的可刪
+    -navbar 的 rwd
+    -手機 rwd 測試
+    -ProductPage split \n 換行 V
+    -篩選功能 V
+    -產品列表進入單一產品 router-link V
+    -收藏愛心拿掉 V
+    -表單驗證加星號 V
+    -跳轉到訂單的 router-link 網址要帶上 :id 的東西 V
+    -order 帶出照片 （要用其他方式傳？）V
+    -cart的付款拿掉 V
+    -測試優惠券帶到 order 頁面 V
+    
+
+    (看情況處理)
     -methods 加註解
+    -檢查註解、有的可刪
+    -商品表格靠右 (暫時不處理)
     -確認 loading 是不是都有帶上
-    -跳轉到訂單的 router-link 網址要帶上 :id 的東西
-    -order 帶出照片 （要用其他方式傳？）
-    -cart的付款拿掉
-    -商品表格靠右
-    -測試優惠券帶到 order 頁面
+    
+
 --
 發問
 1. productsPage router-link 沒反應

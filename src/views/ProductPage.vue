@@ -23,7 +23,7 @@
       <div class="col-md-6">
         <div class="h-100">
           <h3 class="product-title mb-3">{{ product.title }}</h3>
-          <p class="lh-lg ps-3 fs-7">
+          <p class="lh-lg ps-3 fs-7 changeLine">
             {{ product.description }}
           </p>
           <p v-if="product.price === product.origin_price" class="fs-5-5">
@@ -61,9 +61,9 @@
     </div>
   </div>
   <div class="container mx-auto">
-    <h5 class="h5 text-center">商品描述</h5>
+    <h5 class="h5 text-center mb-3">商品描述</h5>
     <div class="text-center">
-      <p class="mb-3">{{ product.content }}</p>
+      <p class="mb-3 changeLine lh-lg">{{ product.content }}</p>
       <img
         :src="product.imageUrl"
         :alt="product.title"
@@ -74,8 +74,22 @@
           <img :src="imgs" :alt="product.title" class="description-img mb-3" />
         </div>
       </div>
-      <h4 class="fs-5-5 mt-5">購物須知</h4>
-      <p class="text-start">商品退換貨、尺寸</p>
+      <div class="w-75 mx-auto">
+        <h4 class="fs-5-5 mt-5 text-start">購物須知</h4>
+        <p class="text-start">
+          感謝您購買 Ahead 的商品，所有商品皆含有 1 年的保固，以及 7
+          天的鑑賞期（含例假日），如有退貨需求，請參閱以下說明。
+        </p>
+        <ul class="text-start">
+          <li class="mb-2">
+            商品鑑賞期不等於試用期，退回時請保持商品與包裝完整，如因外力撞擊等意外因素，造成了飾品刮傷受損，請恕無法接受退換貨
+          </li>
+          <li class="mb-2">如商品超過鑑賞期欲辦理退換貨者，恕不受理</li>
+          <li class="mb-2">
+            商品圖片僅為參考用，色彩也會因不同電腦而有所差異，故以實際商品顏色為主
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -84,12 +98,15 @@
 export default {
   data() {
     return {
-      product: {},
+      product: {
+        content: '',
+        desciption: ''
+      },
       isLoading: false
     }
   },
   methods: {
-    getProduct() {
+    getProduct(content) {
       this.isLoading = true
       const id = this.$route.params.id
       const url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/product/${id}`
@@ -99,7 +116,12 @@ export default {
           console.log(res)
           console.log(this.$route.params.id)
           this.product = res.data.product
+          // this.product.content = res.data.product.content
           this.isLoading = false
+
+          const content = res.data.product.content
+          content.split('\n')
+          console.log(content)
         })
         .catch((err) => {
           alert(err.response.data)
@@ -128,6 +150,7 @@ export default {
         })
     }
   },
+
   watch: {
     $route() {
       this.getProduct()
@@ -135,6 +158,7 @@ export default {
   },
   mounted() {
     this.getProduct()
+    // this.splitText()
   }
 }
 </script>
@@ -160,5 +184,9 @@ export default {
   .product-title {
     margin-top: 24px;
   }
+}
+/* 換行 */
+.changeLine {
+  white-space: pre-line;
 }
 </style>

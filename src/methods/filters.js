@@ -8,8 +8,7 @@ export function toThousandths(num) {
   return (num + '').replace(reg, '$1,')
 }
 
-export function split(product) {
-  const description = product.description
-  const descriptionSplit = description.split('')
+export function descriptionSplit(product) {
+  const descriptionSplit = product.split('')
   return descriptionSplit
 }
