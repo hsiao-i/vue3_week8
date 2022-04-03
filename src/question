@@ -17,7 +17,9 @@ toast
 訂單重新整理頁面刷新保留資料（localstorage）
 研究文章和圖片上傳
 照片顏色調整？
-
+進度條 https://bootstrap5.hexschool.com/docs/5.1/utilities/position/
+手機驗證
+有時間再把 cartPage 的折扣金額帶到 orderPage
 --
 篩選 V
 

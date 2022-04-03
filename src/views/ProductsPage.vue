@@ -8,19 +8,23 @@
           class="mt-3 category list-unstyled d-flex d-sm-block justify-content-around"
         >
           <li class="mb-3">
-            <a class="text-decoration-none pointer" @click="getProducts"
-              >全部商品</a
+            <a
+              class="text-decoration-none pointer d-block"
+              @click="getProducts('')"
+              ><span>全部商品</span></a
             >
           </li>
           <li class="mb-3">
-            <a class="text-decoration-none pointer" @click="getProducts('項鍊')"
+            <a
+              class="text-decoration-none pointer d-block"
+              @click="getProducts('項鍊')"
               >項鍊</a
             >
           </li>
           <li class="mb-3">
             <a
               to
-              class="text-decoration-none pointer"
+              class="text-decoration-none pointer d-block"
               @click="getProducts('戒指')"
               >戒指</a
             >
@@ -28,7 +32,7 @@
           <li class="mb-3">
             <a
               to
-              class="text-decoration-none pointer"
+              class="text-decoration-none pointer d-block"
               @click="getProducts('耳環')"
               >耳環</a
             >
@@ -36,7 +40,7 @@
           <li class="mb-3">
             <a
               to
-              class="text-decoration-none pointer"
+              class="text-decoration-none pointer d-block"
               @click="getProducts('手鍊')"
               >手鍊</a
             >
@@ -58,7 +62,9 @@
                 ></router-link>
               </div>
               <div class="card-content">
-                <div class="d-flex pt-3 px-4 justify-content-between">
+                <div
+                  class="d-flex pt-3 px-4 justify-content-between align-items-start"
+                >
                   <div>
                     <h6 class="fs-5-5">{{ products.title }}</h6>
                     <p v-if="products.price === products.origin_price">
@@ -71,9 +77,9 @@
                       >
                     </p>
                   </div>
-                  <div class="text-end">
+                  <!-- <div class="text-end">
                     <i class="bi bi-heart fs-5"></i>
-                  </div>
+                  </div> -->
                 </div>
 
                 <button
@@ -111,12 +117,14 @@ export default {
       products: [],
       pagination: {},
       product: {},
-      cartData: []
+      cartData: [],
+      currentPage: 1
     }
   },
   methods: {
-    getProducts(page = 1, category) {
+    getProducts(category, page = 1) {
       this.isLoading = true
+      this.currentPage = page
       let url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/products?page=${page}`
 
       if (category) {
@@ -155,6 +163,7 @@ export default {
         })
     }
   },
+
   mounted() {
     this.getProducts()
   }

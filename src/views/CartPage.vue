@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-
+    <!-- 購物車內容 -->
     <div class="table-cus">
       <h5
         class="h5 bg-danger bg-gradient rounded-top p-3 text-white"
@@ -108,47 +108,61 @@
             </tr>
           </tbody>
         </table>
-        <div class="mt-4">
-          <div class="d-flex w-50">
-            <input
-              type="text"
-              class="form-control w-75 rounded-0 rounded-start border-end-0"
-              placeholder="請輸入優惠碼"
-              v-model="coupon"
-            />
-
+        <!-- 優惠券與結帳金額 -->
+        <div class="row">
+          <div class="col-6 mt-4">
             <button
               type="button"
-              class="btn btn-outline-danger w-25"
-              @click="useCoupon"
+              class="btn btn-outline-danger"
+              @click="deleteAllCart"
             >
-              使用優惠券
+              清空購物車
             </button>
           </div>
+          <div class="col-6">
+            <div class="mt-4">
+              <div class="d-flex">
+                <input
+                  type="text"
+                  class="form-control w-75 rounded-0 rounded-start border-end-0"
+                  placeholder="請輸入優惠碼"
+                  v-model="coupon"
+                />
 
-          <div class="w-50 mt-3">
-            <div class="d-flex justify-content-between">
-              <p>商品小計</p>
-              <p>NT$ {{ cartData.total }}</p>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p>折抵金額</p>
-              <p>
-                - NT$
-                {{ `${Math.ceil(cartData.total - cartData.final_total)}` }}
-              </p>
-            </div>
-            <div class="d-flex justify-content-between mt-3">
-              <p>結帳金額</p>
-              <p class="text-danger fs-5-5">
-                NT$ {{ `${Math.ceil(cartData.final_total)}` }}
-              </p>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger w-25"
+                  @click="useCoupon"
+                >
+                  使用優惠券
+                </button>
+              </div>
+
+              <div class="mt-3">
+                <div class="d-flex justify-content-between">
+                  <p>商品小計</p>
+                  <p>NT$ {{ cartData.total }}</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <p>折抵金額</p>
+                  <p>
+                    - NT$
+                    {{ `${Math.ceil(cartData.total - cartData.final_total)}` }}
+                  </p>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                  <p>結帳金額</p>
+                  <p class="text-danger fs-5-5">
+                    NT$ {{ `${Math.ceil(cartData.final_total)}` }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
+    <!-- 填寫資訊 -->
     <div class="table-cus my-5">
       <h5
         class="h5 bg-danger bg-gradient rounded-top p-3 text-white"
@@ -159,7 +173,10 @@
       <div class="p-4">
         <VForm ref="form" v-slot="{ errors }" @submit="submitOrder">
           <div class="mb-3">
-            <label for="name" class="form-label">姓名</label>
+            <label for="name" class="form-label"
+              >姓名<span class="text-danger fs-5-5 ms-1">*</span></label
+            >
+
             <VField
               id="name"
               name="姓名"
@@ -174,7 +191,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label"
+              >Email<span class="text-danger fs-5-5 ms-1">*</span></label
+            >
             <VField
               id="email"
               name="email"
@@ -189,7 +208,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="phone" class="form-label">聯絡電話</label>
+            <label for="phone" class="form-label"
+              >聯絡電話<span class="text-danger fs-5-5 ms-1">*</span></label
+            >
             <VField
               id="phone"
               name="聯絡電話"
@@ -207,7 +228,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="address" class="form-label">收件地址</label>
+            <label for="address" class="form-label"
+              >收件地址<span class="text-danger fs-5-5 ms-1">*</span></label
+            >
             <VField
               id="address"
               name="收件地址"
@@ -223,8 +246,8 @@
               class="invalid-feedback"
             ></ErrorMessage>
           </div>
-          <div class="mb-3">
-            <label for="pay" class="form-label">付款方式</label>
+          <!-- <div class="mb-3">
+            <label for="pay" class="form-label">付款方式<span class="text-danger fs-5-5 ms-1">*</span></label>
             <VField
               id="pay"
               name="付款方式"
@@ -235,7 +258,6 @@
               rules="required"
               v-model="pay"
             >
-              <!-- <option value="" disabled>請選擇付款方式</option> -->
               <option value="default" selected disabled>請選擇付款方式</option>
               <option value="ATM">ATM 轉帳</option>
               <option value="visa">信用卡</option>
@@ -245,7 +267,7 @@
               name="付款方式"
               class="invalid-feedback"
             ></ErrorMessage>
-          </div>
+          </div> -->
           <div class="mb-3">
             <label for="message" class="form-label">留言</label>
             <textarea
@@ -267,66 +289,6 @@
             確認訂單
           </button>
         </VForm>
-
-        <!-- <div class="w-75 mx-auto mt-4">
-          <div class="mb-3">
-            <label for="name" class="form-label"
-              ><span class="text-danger me-1">*</span>姓名
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="name"
-              placeholder="請輸入姓名"
-            />
-          </div>
-
-          <div class="mb-3">
-            <label for="電子郵件" class="form-label"
-              ><span class="text-danger me-1">*</span>電子郵件
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="電子郵件"
-              placeholder="請輸入電子郵件"
-            />
-          </div>
-
-          <div class="mb-3">
-            <label for="phone" class="form-label"
-              ><span class="text-danger me-1">*</span>聯絡電話
-            </label>
-            <input
-              type="number"
-              class="form-control"
-              id="phone"
-              placeholder="請輸入聯絡電話"
-            />
-          </div>
-
-          <div class="mb-3">
-            <label for="address" class="form-label"
-              ><span class="text-danger me-1">*</span>收件地址
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="address"
-              placeholder="請輸入收件地址"
-            />
-          </div>
-
-          <div class="mb-3">
-            <label for="message" class="form-label">備註 </label>
-            <textarea type="text" class="form-control" id="message" rows="4">
-            </textarea>
-          </div>
-
-          <button type="button" class="btn btn-danger text-white w-100">
-            下一步：確認訂單
-          </button>
-        </div> -->
       </div>
     </div>
   </div>
@@ -422,6 +384,21 @@ export default {
         .catch((err) => {
           alert(err.response)
           this.isLoading = false
+        })
+    },
+    // 清空購物車
+    deleteAllCart() {
+      const url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/carts`
+
+      this.$http
+        .delete(url)
+        .then((res) => {
+          console.log(res)
+          alert('已清空購物車')
+          this.getCart()
+        })
+        .catch((err) => {
+          alert(err.response)
         })
     },
     // 送出訂單

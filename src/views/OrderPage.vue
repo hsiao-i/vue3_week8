@@ -1,5 +1,6 @@
 <template>
   <LoadingOverlay :active="isLoading" :z-indes="1000"></LoadingOverlay>
+  <!-- 進度條 -->
   <div>
     <div class="d-flex justify-content-around w-50 mx-auto my-5">
       <div>
@@ -24,10 +25,12 @@
       </div>
     </div>
   </div>
+
   <div class="container">
     <div class="row g-5 justify-content-around">
-      <div class="col-12 col-md-6">
-        <div class="table-cus">
+      <!-- 購物車列表確認 -->
+      <div class="col-12 col-lg-6">
+        <div class="table-cus mb-5">
           <h5
             class="h5 bg-danger bg-gradient rounded-top p-3 text-white"
             style="--bs-bg-opacity: 0.5"
@@ -58,11 +61,13 @@
                         class="cart-img me-3 rounded-3"
                       />
                       <div>
-                        <h6 class="mt-2 text-center">
+                        <h6 class="mt-2">
                           {{ orderCart.product.title }}
                         </h6>
 
-                        <p class="text-secondary">數量：{{ orderCart.qty }}</p>
+                        <p class="text-secondary text">
+                          數量：{{ orderCart.qty }}
+                        </p>
                       </div>
                     </div>
                   </td>
@@ -87,11 +92,25 @@
               </tbody>
             </table>
             <div class="mt-4">
-              <div class="w-50 mt-3">
+              <div class="w-50 mt-3 text-end">
                 <div class="d-flex justify-content-between">
-                  <p>商品小計</p>
-                  <p>NT$ {{ order.total }}</p>
+                  <p>商品結帳金額</p>
+                  <p class="text-danger">NT$ {{ Math.ceil(order.total) }}</p>
                 </div>
+                <!-- <div class="d-flex justify-content-between">
+                  <p>折抵金額</p>
+                  <p>
+                    - NT$
+                    {{ `${Math.ceil(cartData.total - cartData.final_total)}` }}
+                  </p>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                  <p>結帳金額</p>
+                  <p class="text-danger fs-5-5">
+                    NT$ {{ `${Math.ceil(order.final_total)}` }}
+                  </p>
+                </div> -->
+
                 <!-- <div class="d-flex justify-content-between">
                   <p>折抵金額</p>
                   <p>
@@ -107,7 +126,9 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-6 mt-0 control">
+      <!-- 訂單個人資料、付款方式、確認付款 -->
+      <div class="col-12 col-lg-6 mt-0 control">
+        <!-- 表頭 -->
         <div class="table-cus my-5">
           <h5
             class="h5 bg-danger bg-gradient rounded-top p-3 text-white"
@@ -115,60 +136,8 @@
           >
             確認顧客資訊
           </h5>
+          <!-- 訂單詳細資料 -->
           <div class="px-5 py-4 text-center">
-            <!-- <table class="table">
-              <tbody>
-                <tr>
-                  <th>訂單金額</th>
-                  <td>NT$ {{}}</td>
-                </tr>
-                <tr>
-                  <th>訂單編號</th>
-                  <td>{{}}</td>
-                </tr>
-                <tr>
-                  <th>訂單時間</th>
-                  <td>{{}}</td>
-                </tr>
-                <tr>
-                  <th>收件人姓名</th>
-                  <td>{{}}</td>
-                </tr>
-                <tr>
-                  <th>Email</th>
-                  <td>{{}}</td>
-                </tr>
-                <tr>
-                  <th>聯絡電話</th>
-                  <td>{{}}</td>
-                </tr>
-                <tr>
-                  <th>收件地址</th>
-                  <td>{{}}</td>
-                </tr>
-                <tr>
-                  <th>付款方式</th>
-                  <td>
-                    <select
-                      name="pay"
-                      id="pay"
-                      v-modal="pay"
-                      class="form-select"
-                    >
-                      <option value="" selected disabled>請選擇付款方式</option>
-                      <option value="ATM">ATM 轉帳</option>
-                      <option value="visa">信用卡</option>
-                      <option value="convenience">超商付款</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <th>留言</th>
-                  <td>{{}}</td>
-                </tr>
-              </tbody>
-            </table> -->
-
             <div class="row">
               <div class="col-4">
                 <ul class="list-unstyled text-start">
@@ -179,36 +148,64 @@
                   <li class="mb-3">Email</li>
                   <li class="mb-3">聯絡電話</li>
                   <li class="mb-3">收件地址</li>
-                  <li class="mb-3">付款方式</li>
                   <li class="mb-3">留言</li>
+                  <li class="mb-3">付款方式</li>
                 </ul>
               </div>
+
               <div class="col-7">
-                <ul class="list-unstyled text-start">
-                  <li class="mb-3 text-danger">NT$ {{ order.total }}</li>
-                  <li class="mb-3">{{ order.id }}</li>
-                  <li class="mb-3">{{ $filters.date(order.create_at) }}</li>
-                  <li class="mb-3">{{ order.user.name }}</li>
-                  <li class="mb-3">{{ order.user.email }}</li>
-                  <li class="mb-3">{{ order.user.tel }}</li>
-                  <li class="mb-3">{{ order.user.address }}</li>
-                  <li class="mb-3">
-                    <select
-                      name="orderPay"
-                      id="orderPay"
-                      v-model="pay"
-                      class="form-select"
-                      placeholder="請輸入付款方式"
+                <VForm ref="form" v-slot="{ errors }" @submit="checkPay">
+                  <ul class="list-unstyled text-start">
+                    <li class="mb-3 text-danger">
+                      NT$ {{ Math.ceil(order.total) }}
+                    </li>
+                    <li class="mb-3">{{ order.id }}</li>
+                    <li class="mb-3">{{ $filters.date(order.create_at) }}</li>
+                    <li class="mb-3">{{ order.user.name }}</li>
+                    <li class="mb-3">{{ order.user.email }}</li>
+                    <li class="mb-3">{{ order.user.tel }}</li>
+                    <li class="mb-3">{{ order.user.address }}</li>
+                    <li class="mb-3">
+                      <p v-if="!order.message">無</p>
+                      <p v-else>{{ order.message }}</p>
+                    </li>
+                    <li class="mb-3">
+                      <div class="mb-3">
+                        <VField
+                          id="pay"
+                          name="付款方式"
+                          as="select"
+                          class="form-select"
+                          :class="{ 'is-invalid': errors['付款方式'] }"
+                          placeholder="請選擇付款方式"
+                          rules="required"
+                          v-model="pay"
+                        >
+                          <option value="" selected disabled>
+                            請選擇付款方式
+                          </option>
+                          <option value="ATM">ATM 轉帳</option>
+                          <option value="visa">信用卡</option>
+                          <option value="visa">超商付款</option>
+                        </VField>
+                        <ErrorMessage
+                          name="付款方式"
+                          class="invalid-feedback"
+                        ></ErrorMessage>
+                      </div>
+                    </li>
+
+                    <button
+                      type="submit"
+                      class="btn btn-danger"
+                      :disabled="Object.keys(errors).length > 0"
                     >
-                      <option value="" selected disabled>請選擇付款方式</option>
-                      <option value="ATM">ATM 轉帳</option>
-                      <option value="visa">信用卡</option>
-                      <option value="convenience">超商付款</option>
-                    </select>
-                  </li>
-                  <li class="mb-3">{{ order.message }}</li>
-                </ul>
+                      確認付款
+                    </button>
+                  </ul>
+                </VForm>
               </div>
+
               <!-- <button type="button" class="btn btn-danger">
                 <router-link :to="`/order/${orderId}`"></router-link>結帳付款
               </button> -->
@@ -234,24 +231,6 @@ export default {
     }
   },
   methods: {
-    getAllOrder() {
-      this.isLoading = true
-
-      const url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/orders`
-      this.$http
-        .get(url)
-        .then((res) => {
-          console.log(res)
-          this.order = res.data.orders.this.id
-
-          this.isLoading = false
-          console.log(this.$route.params)
-        })
-        .catch((err) => {
-          alert(err.response)
-          this.isLoading = false
-        })
-    },
     // 取得單一產品的訂單資料 (結帳資料)
     getOrder() {
       this.isLoading = true
@@ -272,35 +251,21 @@ export default {
           this.isLoading = false
         })
     },
-    // 取得購物車資料
-    getCart() {
-      const url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/cart`
-      this.isLoading = true
+
+    // 確認付款
+    checkPay() {
+      const url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/pay/${this.id}`
       this.$http
-        .get(url)
+        .post(url)
         .then((res) => {
           console.log(res)
-          this.cartData = res.data.data
-          this.isLoading = false
+          alert('付款完成！謝謝您的購買 ✿')
+          this.$router.push('/complete')
         })
         .catch((err) => {
           alert(err.response)
-          this.isLoading = false
         })
     }
-    // 結帳付款
-    // orderPay() {
-    //   const url = `${process.env.VUE_APP_API}/v2/api/${process.env.VUE_APP_PATH}/pay/${this.id}`
-    //   this.$http
-    //     .post(url)
-    //     .then((res) => {
-    //       console.log(res)
-    //       alert('付款完成！謝謝您的購買 ✿')
-    //     })
-    //     .catch((err) => {
-    //       alert(err.response)
-    //     })
-    // }
   },
   mounted() {
     // emitter.on('get-order', (form) => {
@@ -310,12 +275,12 @@ export default {
     // console.log(this.form)
     // this.getCart()
     this.getOrder()
-    this.getCart()
   }
 }
 </script>
 
 <style scoped>
+/* 進度條 */
 .order-shape {
   background-color: #c18787;
   color: #ffffff;
@@ -330,6 +295,7 @@ export default {
   height: 45px;
 }
 
+/* 購物車照片 */
 .cart-img {
   height: 150px;
   width: 40%;
@@ -346,6 +312,7 @@ export default {
   }
 }
 
+/* 訂單表格 */
 .table-cus {
   background-color: #ffffff;
   box-shadow: 2px 2px 10px 1px #eae7e7;
@@ -353,5 +320,11 @@ export default {
 
 .thead {
   border-bottom: 2px solid #e9e8e8;
+}
+
+@media (max-width: 768 px) {
+  .text {
+    text-align: left;
+  }
 }
 </style>
